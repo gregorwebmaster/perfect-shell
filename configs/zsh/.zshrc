@@ -12,3 +12,8 @@ plugins=(git git-flow docker symfony colorize aliases debian)
 source $ZSH/oh-my-zsh.sh
 
 source $HOME/.aliases
+
+# Auto-start tmux
+if [ -z "$TMUX" ]; then
+    tmux attach -t default || tmux new -s default
+fi

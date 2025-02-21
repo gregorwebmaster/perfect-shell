@@ -27,7 +27,7 @@ detect_os() {
         echo -e "${BLUE}- Debian/Ubuntu${NC}"
         echo -e "${BLUE}- Arch Linux${NC}"
         echo -e "${RED}Please contact the project author for support: ${NC}"
-        echo -e "${BLUE} @TODO Add link to repo${NC}"
+        echo -e "${BLUE} https://github.com/gregorwebmaster/perfect-shell ${NC}"
         exit 1
     fi
 }

@@ -11,7 +11,4 @@ plugins=(git git-flow docker symfony colorize aliases debian)
 
 source $ZSH/oh-my-zsh.sh
 
-source $HOME/myscripts/aliases.sh
-source $HOME/myscripts/envs.sh
-
-#xscreensaver -no-splash &
+source $HOME/.aliases

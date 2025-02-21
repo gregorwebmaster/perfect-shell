@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Definicja kodów kolorów
 GREEN='\033[0;32m'

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-SUDO_CMD="sudo"
-
 install_packages() {
     # System packages
     SYSTEM_PACKAGES="git curl wget mc zsh ripgrep node go rust tmux"

@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  test-alpine:
+    build:
+      context: .
+      dockerfile: tests/docker/Dockerfile.alpine
+    volumes:
+      - .:/app
+    command: sh -c "./install.sh && ./tests/test.sh"
+
+  test-debian:
+    build:
+      context: .
+      dockerfile: tests/docker/Dockerfile.debian
+    volumes:
+      - .:/app
+    command: sh -c "./install.sh && ./tests/test.sh"
+
+  test-arch:
+    build:
+      context: .
+      dockerfile: tests/docker/Dockerfile.arch
+    volumes:
+      - .:/app
+    command: sh -c "./install.sh && ./tests/test.sh"
+
+  test-ubuntu:
+    build:
+      context: .
+      dockerfile: tests/docker/Dockerfile.ubuntu
+    volumes:
+      - .:/app
+    command: sh -c "./install.sh && ./tests/test.sh"
+
+  test-kali:
+    build:
+      context: .
+      dockerfile: tests/docker/Dockerfile.kali
+    volumes:
+      - .:/app
+    command: sh -c "./install.sh && ./tests/test.sh"
+
+  test-manjaro:
+    build:
+      context: .
+      dockerfile: tests/docker/Dockerfile.manjaro
+    volumes:
+      - .:/app
+    command: sh -c "./install.sh && ./tests/test.sh"
+    
+  test-macos:
+    build:
+      context: .
+      dockerfile: tests/docker/Dockerfile.macos
+    volumes:
+      - .:/app
+    command: sh -c "./install.sh && ./tests/test.sh"
+    privileged: true  # Required for macOS-like container

@@ -1,20 +1,24 @@
 #!/bin/sh
 
-SUDO_CMD="sudo"
-
 install_packages() {
     # System packages
     SYSTEM_PACKAGES="git curl wget mc zsh ripgrep nodejs npm go rust tmux"
 
     echo -e "${BLUE}Installing system packages...${NC}"
+    # Full system upgrade
+    pacman -Syu --noconfirm
+    
     for package in $SYSTEM_PACKAGES; do
         if ! command -v "$package" >/dev/null 2>&1; then
             echo "Installing $package..."
-            sudo pacman -Qi "$package" >/dev/null 2>&1 || sudo pacman -S --noconfirm "$package"
+            pacman -Qi "$package" >/dev/null 2>&1 || pacman -S --noconfirm "$package"
         else
             echo "$package already installed"
         fi
     done
+
+    # Reinstall npm globally
+    npm install -g npm@latest
 
     # Check Neovim version and reinstall if needed
     echo -e "${BLUE}Checking Neovim version...${NC}"
@@ -25,11 +29,11 @@ install_packages() {
             echo "Neovim version $current_version is already up to date"
         else
             echo "Neovim version $current_version is outdated, reinstalling..."
-            sudo pacman -R --noconfirm neovim
-            sudo pacman -S --noconfirm neovim
+            pacman -R --noconfirm neovim
+            pacman -S --noconfirm neovim
         fi
     else
         echo "Neovim not found, installing..."
-        sudo pacman -S --noconfirm neovim
+        pacman -S --noconfirm neovim
     fi
 }

@@ -1,0 +1,5 @@
+FROM kalilinux/kali-rolling:latest
+WORKDIR /app
+COPY . .
+RUN chmod +x ./install.sh ./tests/test.sh
+CMD ["./tests/test.sh"]

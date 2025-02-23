@@ -1,40 +1,54 @@
 #!/bin/sh
 
-SUDO_CMD="sudo"
-
 install_packages() {
-    # System packages
-    SYSTEM_PACKAGES="git curl wget mc zsh ripgrep nodejs npm golang rust tmux"
-
     echo -e "${BLUE}Installing system packages...${NC}"
-    sudo apt-get update
+
+    # Set environment variables for non-interactive installation
+    export DEBIAN_FRONTEND=noninteractive
+    export TERM=xterm
+    export GOPATH=$HOME/gov
+    export PATH=$PATH:$GOPATH/bin
+
+    # Create Go workspace directory
+    mkdir -p $GOPATH/bin
+
+    # Update and install essential packages first
+    apt-get update
+    apt-get install -y libdb5.3 libpython3.11-stdlib libperl5.36 libpam-modules
+    apt-get install -y libcurl4 libcurl3-gnutls libappstream4
+    apt-get install -y --reinstall readline-common libreadline8
+    apt-get install -y curl git zsh apt-utils software-properties-common libterm-readline-perl-perl
+
+    # Add Node.js repository and install Node.js
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+    apt-get install -y nodejs
+
+    # Install Neovim from source
+    # Install Neovim dependencies and build tools
+    apt-get install -y ninja-build gettext cmake unzip pkg-config libtool-bin g++ automake
+
+    # Clone and build Neovim
+    git clone https://github.com/neovim/neovim
+    cd neovim
+    git checkout stable
+    make CMAKE_BUILD_TYPE=Release -j$(nproc)
+    make install
+    cd ..
+    rm -rf neovim
+
+    # System packages for later installation
+    SYSTEM_PACKAGES="wget mc ripgrep golang rustc cargo tmux"
+
+    # Install remaining packages
     for package in $SYSTEM_PACKAGES; do
         if ! command -v "$package" >/dev/null 2>&1; then
             echo "Installing $package..."
-            dpkg -l | grep -q "$package" || sudo apt-get install -y "$package"
+            dpkg -l | grep -q "$package" || DEBIAN_FRONTEND=noninteractive apt-get install -y "$package"
         else
             echo "$package already installed"
         fi
     done
 
-    # Check Neovim version and reinstall if needed
-    echo -e "${BLUE}Checking Neovim version...${NC}"
-    if command -v nvim >/dev/null 2>&1; then
-        current_version=$(nvim --version | head -n1 | cut -d ' ' -f2)
-        required_version="0.10.0"
-        if printf '%s\n' "$required_version" "$current_version" | sort -V -C; then
-            echo "Neovim version $current_version is already up to date"
-        else
-            echo "Neovim version $current_version is outdated, reinstalling..."
-            sudo apt-get remove -y neovim
-            sudo add-apt-repository -y ppa:neovim-ppa/unstable
-            sudo apt-get update
-            sudo apt-get install -y neovim
-        fi
-    else
-        echo "Neovim not found, installing..."
-        sudo add-apt-repository -y ppa:neovim-ppa/unstable
-        sudo apt-get update
-        sudo apt-get install -y neovim
-    fi
+    # Cleanup
+    apt-get autoremove -y
 }

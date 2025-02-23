@@ -26,7 +26,7 @@ This project provides an automated installation and configuration of a developme
 ## 🔨 Installation
 
 ```bash
-./install.sh
+sudo ./install.sh
 ```
 
 ## ❓ Help System
@@ -152,6 +152,33 @@ add to settings.json:
 }
 ```
 
+## 🧪 Testing
+
+The installer can be tested in different Linux distributions using Docker containers.
+
+### Supported Test Environments
+- Alpine Linux
+- Debian
+- Arch Linux
+- Ubuntu
+- Kali Linux
+- Manjaro
+- macOS (experimental)
+
+### Running Tests
+
+Test all environments:
+```bash
+docker-compose up --build
+```
+
+Test specific environment:
+```bash
+docker-compose up --build <environment>
+### e.g.:
+docker-compose up --build test-alpine    # Test on Alpine
+```
+
 ## 🙏 Acknowledgments
 
 This configuration was inspired by the following YouTube channels:
@@ -160,3 +187,6 @@ This configuration was inspired by the following YouTube channels:
 - 🎥 [Dreams of Code](https://www.youtube.com/@dreamsofcode) - For their comprehensive guides on setting up Neovim as a modern IDE
 
 Thank you to these content creators for sharing their knowledge and helping the Neovim community! ✨
+
+## 🤝 Contributing
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.

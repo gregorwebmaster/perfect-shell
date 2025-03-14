@@ -8,6 +8,8 @@ install_packages() {
     for package in $SYSTEM_PACKAGES; do
         if ! command -v "$package" >/dev/null 2>&1; then
             echo "Installing $package..."
+            # Install required packages
+            brew install zsh zsh-completions
             brew list "$package" >/dev/null 2>&1 || brew install "$package"
         else
             echo "$package already installed"

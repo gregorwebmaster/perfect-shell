@@ -3,9 +3,10 @@
 
 install_packages() {
     # System packages
-    SYSTEM_PACKAGES="git curl wget mc zsh ripgrep nodejs npm go rust tmux"
+    SYSTEM_PACKAGES="git curl wget bash zsh ripgrep nodejs npm go rust tmux mc htop"
 
     echo -e "${BLUE}Installing system packages...${NC}"
+    # Update and install base packages
     apk update
     for package in $SYSTEM_PACKAGES; do
         if ! command -v "$package" >/dev/null 2>&1; then
@@ -20,7 +21,7 @@ install_packages() {
     echo -e "${BLUE}Checking Neovim version...${NC}"
     if command -v nvim >/dev/null 2>&1; then
         current_version=$(nvim --version | head -n1 | cut -d ' ' -f2)
-        required_version="0.10.0"
+        required_version="0.10"
         if printf '%s\n' "$required_version" "$current_version" | sort -V -C; then
             echo "Neovim version $current_version is already up to date"
         else

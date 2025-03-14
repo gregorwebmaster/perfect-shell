@@ -25,8 +25,14 @@ This project provides an automated installation and configuration of a developme
 
 ## 🔨 Installation
 
+### Install packages and create configuration 
+
 ```bash
-sudo ./install.sh
+sudo ./install.sh && ./install.sh config
+```
+### Show help
+```bash
+./install.sh help
 ```
 
 ## ❓ Help System

@@ -6,7 +6,9 @@ install_packages() {
 
     echo -e "${BLUE}Installing system packages...${NC}"
     # Full system upgrade
+    # Update and install base packages
     pacman -Syu --noconfirm
+    pacman -S --noconfirm zsh zsh-completions
     
     for package in $SYSTEM_PACKAGES; do
         if ! command -v "$package" >/dev/null 2>&1; then
